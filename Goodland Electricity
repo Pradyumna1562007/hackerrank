@@ -1,0 +1,18 @@
+ public static int pylons(int k, List<Integer> arr) {
+        int ans = 0, n = arr.size();
+        for(int i = 0; i < n; i++){
+            
+            int buildIdx = Math.min(i + (k - 1), n - 1);
+            
+            while(buildIdx >= 0 && buildIdx < n && arr.get(buildIdx) == 0)
+                buildIdx--;
+                
+            if(buildIdx >= 0 && buildIdx < n && arr.get(buildIdx) == 1 && Math.abs(buildIdx - i) <k){
+                ans++;
+                i = buildIdx + (k - 1);
+            }
+            else
+                return -1;
+        }
+        return ans;
+    }
