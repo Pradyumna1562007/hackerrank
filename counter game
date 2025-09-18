@@ -1,0 +1,14 @@
+public static String counterGame(long n) {
+    int cnt = 0;
+    while (n > 1) {
+        if ((n & (n - 1)) == 0) {
+            n = n / 2;
+        } else {
+            int k = (int)(Math.log(n) / Math.log(2));
+            long x = 1L << k;
+            n = n - x;
+        }
+        cnt++;
+    }
+    return (cnt % 2 == 0) ? "Richard" : "Louise";
+}
