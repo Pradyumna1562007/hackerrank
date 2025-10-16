@@ -1,0 +1,44 @@
+#include <iostream>
+#include <vector>
+#include <string>
+using namespace std;
+
+long long winningLotteryTicket(const vector<string>& tickets) {
+    const int fullMask = (1 << 10) - 1;
+    vector<long long> freq(1 << 10, 0);
+
+    for (const string& ticket : tickets) {
+        int mask = 0;
+        for (char c : ticket) {
+            mask |= 1 << (c - '0');
+        }
+        freq[mask]++;
+    }
+
+    long long count = 0;
+    for (int i = 0; i < (1 << 10); i++) {
+        if (freq[i] == 0) continue;
+        for (int j = i; j < (1 << 10); j++) {
+            if (freq[j] == 0) continue;
+            if ((i | j) == fullMask) {
+                if (i == j) {
+                    count += freq[i] * (freq[i] - 1) / 2;
+                } else {
+                    count += freq[i] * freq[j];
+                }
+            }
+        }
+    }
+    return count;
+}
+
+int main() {
+    ios_base::sync_with_stdio(false);
+    cin.tie(nullptr);
+
+    int n; cin >> n;
+    vector<string> tickets(n);
+    for (int i = 0; i < n; i++) cin >> tickets[i];
+    cout << winningLotteryTicket(tickets) << "\n";
+    return 0;
+}
